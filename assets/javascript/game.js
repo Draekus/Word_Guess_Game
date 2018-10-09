@@ -1,5 +1,5 @@
 var wordBank = ["despicably", "flashpoint", "formidable", "downstream", "slumbering", "infamously", "binoculars"]
-var computerChoice = wordBank[Math.floor(Math.random() * wordBank.length)]
+
 var winsArray = [];
 var wins = 0
 var prevGuesses = []
@@ -8,7 +8,7 @@ var guessesLeft = 6
 
 
 $(document).ready(function() {
-    
+    var computerChoice = wordBank[Math.floor(Math.random() * wordBank.length)]
     $("#guessesleftvalue").text(guessesLeft)
     $("#wins").text(wins)
 
@@ -33,9 +33,40 @@ $(document).ready(function() {
         var userGuess = event.key;
         
 
+        if (guessesLeft === 0) {
+            alert("Sorry you lost!")
+        }
+
+        else if (wins === computerChoice.length) {
+            alert("You Win!")
+            $("#wordblanks").empty();
+            $("#guessedletters").empty();
+            $('#wins').empty();
+            $("#guessesleftvalue").empty();
+            wins = 0;
+            guessesLeft = 6;
+            prevGuesses = [];
+            winsArray = [];
+            computerChoice = wordBank[Math.floor(Math.random() * wordBank.length)]
+            $("#guessesleftvalue").text(guessesLeft)
+             $("#wins").text(wins)
+
+            for ( var i = 0; i < computerChoice.length; i++) {
+            var wordblocks = $("<p>")
+            wordblocks.addClass("wordblock" + i);
+            wordblocks.addClass("block")
+            wordblocks.addClass(computerChoice[i])
+            // wordblocks.attr("letter", computerChoice[i]);
+            $("#wordblanks").append(wordblocks);
+            console.log(computerChoice)
+            }
+            
+        }
+
         
-        
-        if ( prevGuesses.includes(userGuess) ) {
+    
+
+        else if ( prevGuesses.includes(userGuess) ) {
             console.log("You already guessed that!")
             alert("Silly Goose You already guessed that!")
             }
@@ -66,15 +97,22 @@ $(document).ready(function() {
             console.log(guessesLeft);
 
         }
+        
+        
+    
+
 
         
-        if (winsArray.length === computerChoice.length) {
-            alert("Hey You Won!")
-        }
+
         
-        else if (guessesLeft === 0) {
-            alert("Sorry you lost!")
-        }
+        
+            
+        
+            
+
+        
+        
+        
         
 
         
@@ -83,4 +121,4 @@ $(document).ready(function() {
 
     }
 });   
-    
+
